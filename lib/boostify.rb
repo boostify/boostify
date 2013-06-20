@@ -1,9 +1,14 @@
-require "boostify/engine"
+require 'boostify/engine'
+require 'boostify/models/charitable'
+require 'boostify/models/donatable'
 
 module Boostify
 
-  # set client secret
-  mattr_accessor :secret_key
+  # set partner id
+  mattr_accessor :partner_id
+
+  # set partner secret
+  mattr_accessor :partner_secret
 
   # set charity api endpoint
   mattr_accessor :charity_api_endpoint
@@ -11,7 +16,7 @@ module Boostify
 
   # set tracker api endpoint
   mattr_accessor :tracker_api_endpoint
-  @@tracker_api_endpoint = 'https://www.boost-project.com/de/tracker/'
+  @@tracker_api_endpoint = 'https://www.boost-project.com/de/tracker/both.png'
 
   def self.config
     yield self
