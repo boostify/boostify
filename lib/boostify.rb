@@ -26,7 +26,14 @@ module Boostify
   mattr_accessor :orm
   @@orm = :mongoid
 
+  mattr_accessor :donatable_class
+  self.donatable_class = 'Transaction'
+
   def self.config
     yield self
+  end
+
+  def self.donatable_class
+    @@donatable_class.constantize
   end
 end

@@ -7,9 +7,6 @@ module Boostify
         included do
           include ::Mongoid::Document
           include ::Mongoid::Timestamps
-
-          belongs_to :charity
-          belongs_to :donatable
         end
       end
     end

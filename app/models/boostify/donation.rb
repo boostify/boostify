@@ -1,11 +1,14 @@
 module Boostify
 
   if Boostify.orm == :active_record
-    class Charity < ActiveRecord::Base; end
+    class Donation < ActiveRecord::Base; end
   end
 
   class Donation
     include Boostify::Models::Mongoid::Donation if Boostify.orm == :mongoid
+
+    belongs_to :charity
+    belongs_to :donatable, class_name: Boostify.donatable_class.to_s
 
     def pixel_url
       query_hash = query_params
