@@ -1,0 +1,38 @@
+AllCops:
+  Excludes:
+    - script/rails
+    - spec/dummy/**
+
+# Use only ascii symbols in comments.
+AsciiComments:
+  Enabled: false
+
+Encoding:
+  Enabled: false
+
+# do not favor inline modifiers because of code coverage
+IfUnlessModifier:
+  Enabled: false
+
+# Use %r for regular expressions matching more than one '/' character.
+FavorPercentR:
+  Enabled: false
+
+# Use sprintf instead of %
+FavorSprintf:
+  Enabled: false
+
+# Limit lines to 80 characters.
+LineLength:
+  Enabled: true
+  Max: 80
+
+# Avoid methods longer than 10 lines of code
+MethodLength:
+  Enabled: true
+  CountComments: false  # count full line comments?
+  Max: 65
+
+# Use %r only for regular expressions matching more than one '/' character.
+PercentR:
+  Enabled: false
