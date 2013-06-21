@@ -1,6 +1,10 @@
+require 'mongoid'
+
 require 'boostify/engine'
 require 'boostify/models/charitable'
 require 'boostify/models/donatable'
+
+require 'boostify/models/mongoid/charity'
 
 module Boostify
 
@@ -17,6 +21,9 @@ module Boostify
   # set tracker api endpoint
   mattr_accessor :tracker_api_endpoint
   @@tracker_api_endpoint = 'https://www.boost-project.com/de/tracker/both.png'
+
+  mattr_accessor :orm
+  @@orm = :mongoid
 
   def self.config
     yield self
