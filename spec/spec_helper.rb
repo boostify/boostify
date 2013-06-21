@@ -2,7 +2,7 @@ require 'simplecov'
 require 'coveralls'
 
 SimpleCov.start 'rails'
-Coveralls.wear!('rails')
+Coveralls.wear! 'rails'
 
 require 'boostify'
 
