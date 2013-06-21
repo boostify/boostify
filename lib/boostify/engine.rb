@@ -3,8 +3,8 @@ module Boostify
     isolate_namespace Boostify
 
     config.generators do |g|
-      g.test_framework :rspec, fixture: false
-      g.fixture_replacement :factory_girl, dir: 'spec/factories'
+      g.test_framework :rspec, fixture: true
+      g.fixture_replacement :fabrication
       g.assets false
       g.helper false
     end
