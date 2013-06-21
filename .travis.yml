@@ -10,3 +10,4 @@ script:
   - rspec
   - rails_best_practices
   - rubocop
+services: mongodb
