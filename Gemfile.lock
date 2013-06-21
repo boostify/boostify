@@ -47,6 +47,7 @@ GEM
       thor
     diff-lcs (1.2.4)
     erubis (2.7.0)
+    fabrication (2.7.2)
     hike (1.2.3)
     i18n (0.6.1)
     journey (1.0.4)
@@ -59,7 +60,14 @@ GEM
       treetop (~> 1.4.8)
     method_source (0.8.1)
     mime-types (1.23)
+    mongoid (3.1.4)
+      activemodel (~> 3.2)
+      moped (~> 1.4)
+      origin (~> 1.0)
+      tzinfo (~> 0.3.22)
+    moped (1.5.0)
     multi_json (1.7.7)
+    origin (1.1.0)
     parser (2.0.0.beta5)
       ast (~> 1.0)
       slop (~> 3.4)
@@ -134,7 +142,9 @@ PLATFORMS
 DEPENDENCIES
   boostify!
   coveralls
+  fabrication
   jquery-rails
+  mongoid
   pry
   rspec-rails
   rubocop
