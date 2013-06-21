@@ -36,3 +36,7 @@ MethodLength:
 # Use %r only for regular expressions matching more than one '/' character.
 PercentR:
   Enabled: false
+
+# Do not avoid the use of class variables, because we need it for configuration purposes
+AvoidClassVars:
+  Enabled: false
