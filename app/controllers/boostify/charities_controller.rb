@@ -1,4 +1,4 @@
-require_dependency "boostify/application_controller"
+require_dependency 'boostify/application_controller'
 
 module Boostify
   class CharitiesController < ApplicationController
