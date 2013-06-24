@@ -8,6 +8,7 @@ require 'boostify/models/mongoid/donation'
 require 'boostify/jobs/sync_charities'
 
 require 'haml'
+require 'strong_parameters'
 
 module Boostify
   mattr_accessor :api_endpoint
