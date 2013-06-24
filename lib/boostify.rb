@@ -11,7 +11,7 @@ require 'haml'
 
 module Boostify
   mattr_accessor :api_endpoint
- self.api_endpoint = 'https://www.boost-project.com/network'
+  self.api_endpoint = 'https://www.boost-project.com/network'
 
   # set partner id
   mattr_accessor :partner_id
