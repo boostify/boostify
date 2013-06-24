@@ -1,6 +1,8 @@
 require 'simplecov'
 require 'coveralls'
 require 'database_cleaner'
+require 'pry'
+require 'webmock/rspec'
 
 SimpleCov.start 'rails'
 Coveralls.wear! 'rails'
