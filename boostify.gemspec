@@ -18,6 +18,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'rails', '~> 3.2.12'
   s.add_dependency 'haml'
+  s.add_dependency 'faraday'
 
   s.add_development_dependency 'sqlite3'
   s.add_development_dependency 'rspec-rails'
@@ -30,4 +31,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'fabrication'
   s.add_development_dependency 'faker'
   s.add_development_dependency 'database_cleaner'
+  s.add_development_dependency 'webmock'
 end

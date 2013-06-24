@@ -2,6 +2,7 @@ PATH
   remote: .
   specs:
     boostify (0.0.1)
+      faraday
       haml
       rails (~> 3.2.12)
 
@@ -35,6 +36,7 @@ GEM
     activesupport (3.2.13)
       i18n (= 0.6.1)
       multi_json (~> 1.0)
+    addressable (2.3.4)
     arel (3.0.2)
     ast (1.1.0)
     awesome_print (1.1.0)
@@ -50,12 +52,16 @@ GEM
       rest-client
       simplecov (>= 0.7)
       thor
+    crack (0.4.0)
+      safe_yaml (~> 0.9.0)
     database_cleaner (1.0.1)
     diff-lcs (1.2.4)
     erubis (2.7.0)
     fabrication (2.7.2)
     faker (1.1.2)
       i18n (~> 0.5)
+    faraday (0.8.7)
+      multipart-post (~> 1.1)
     haml (4.0.3)
       tilt
     hike (1.2.3)
@@ -77,6 +83,7 @@ GEM
       tzinfo (~> 0.3.22)
     moped (1.5.0)
     multi_json (1.7.7)
+    multipart-post (1.2.0)
     origin (1.1.0)
     parser (2.0.0.beta5)
       ast (~> 1.0)
@@ -137,6 +144,7 @@ GEM
       parser (= 2.0.0.beta5)
       rainbow (>= 1.1.4)
     ruby-progressbar (1.1.1)
+    safe_yaml (0.9.3)
     sexp_processor (4.2.1)
     simplecov (0.7.1)
       multi_json (~> 1.0)
@@ -155,6 +163,9 @@ GEM
       polyglot
       polyglot (>= 0.3.1)
     tzinfo (0.3.37)
+    webmock (1.11.0)
+      addressable (>= 2.2.7)
+      crack (>= 0.3.2)
 
 PLATFORMS
   ruby
@@ -173,3 +184,4 @@ DEPENDENCIES
   rubocop
   simplecov
   sqlite3
+  webmock
