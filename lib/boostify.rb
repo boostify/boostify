@@ -6,6 +6,8 @@ require 'boostify/models/donatable'
 require 'boostify/models/mongoid/charity'
 require 'boostify/models/mongoid/donation'
 
+require 'haml'
+
 module Boostify
 
   # set partner id
