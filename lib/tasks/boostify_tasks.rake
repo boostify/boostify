@@ -1,4 +1,8 @@
-# desc "Explaining what the task does"
-# task :boostify do
-#   # Task goes here
-# end
+require 'boostify'
+
+namespace :boostify do
+  desc 'Sync your favorite Charities with Boost'
+  task sync_charities: :environment do
+    Boostify::Jobs::SyncCharities.perform
+  end
+end
