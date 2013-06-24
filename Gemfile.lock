@@ -2,6 +2,7 @@ PATH
   remote: .
   specs:
     boostify (0.0.1)
+      haml
       rails (~> 3.2.12)
 
 GEM
@@ -49,9 +50,14 @@ GEM
       rest-client
       simplecov (>= 0.7)
       thor
+    database_cleaner (1.0.1)
     diff-lcs (1.2.4)
     erubis (2.7.0)
     fabrication (2.7.2)
+    faker (1.1.2)
+      i18n (~> 0.5)
+    haml (4.0.3)
+      tilt
     hike (1.2.3)
     i18n (0.6.1)
     journey (1.0.4)
@@ -156,7 +162,9 @@ PLATFORMS
 DEPENDENCIES
   boostify!
   coveralls
+  database_cleaner
   fabrication
+  faker
   jquery-rails
   mongoid
   pry
