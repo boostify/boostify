@@ -1,9 +1,8 @@
 require 'mongoid'
 
 require 'boostify/engine'
-require 'boostify/models/charitable'
-require 'boostify/models/donatable'
 
+require 'boostify/models/donatable'
 require 'boostify/models/mongoid/charity'
 require 'boostify/models/mongoid/donation'
 
