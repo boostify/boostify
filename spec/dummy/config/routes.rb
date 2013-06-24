@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
 
-  mount Boostify::Engine => "/boostify"
+  resources :donations, only: [:new, :create, :show]
+
+  mount Boostify::Engine => '/boostify'
 end
