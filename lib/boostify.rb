@@ -7,6 +7,7 @@ require 'boostify/models/mongoid/charity'
 require 'boostify/models/mongoid/donation'
 
 require 'haml'
+require 'strong_parameters'
 
 module Boostify
 

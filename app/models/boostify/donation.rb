@@ -6,6 +6,7 @@ module Boostify
 
   class Donation
     include Boostify::Models::Mongoid::Donation if Boostify.orm == :mongoid
+    include ActiveModel::ForbiddenAttributesProtection
 
     belongs_to :charity
     belongs_to :donatable, class_name: Boostify.donatable_class.to_s
