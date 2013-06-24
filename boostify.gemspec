@@ -18,6 +18,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'rails', '~> 3.2.12'
   s.add_dependency 'haml'
+  s.add_dependency 'strong_parameters'
 
   s.add_development_dependency 'sqlite3'
   s.add_development_dependency 'rspec-rails'
