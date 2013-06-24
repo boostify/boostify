@@ -17,6 +17,7 @@ Gem::Specification.new do |s|
     ["MIT-LICENSE", "Rakefile", "README.md"]
 
   s.add_dependency 'rails', '~> 3.2.12'
+  s.add_dependency 'haml'
 
   s.add_development_dependency 'sqlite3'
   s.add_development_dependency 'rspec-rails'
@@ -27,4 +28,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rubocop'
   s.add_development_dependency 'mongoid'
   s.add_development_dependency 'fabrication'
+  s.add_development_dependency 'faker'
+  s.add_development_dependency 'database_cleaner'
 end

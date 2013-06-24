@@ -1,5 +1,6 @@
 require 'simplecov'
 require 'coveralls'
+require 'database_cleaner'
 
 SimpleCov.start 'rails'
 Coveralls.wear! 'rails'
@@ -10,6 +11,7 @@ require File.expand_path('../dummy/config/environment.rb', __FILE__)
 require 'rspec/rails'
 require 'rspec/autorun'
 require 'fabrication'
+require 'faker'
 
 Rails.backtrace_cleaner.remove_silencers!
 
@@ -22,4 +24,21 @@ RSpec.configure do |config|
   config.run_all_when_everything_filtered = true
   config.filter_run :focus
   config.order = 'random'
+
+  # DatabaseCleaner
+  config.before(:suite) do
+    DatabaseCleaner[:mongoid].strategy = :truncation
+    DatabaseCleaner[:mongoid].clean_with(:truncation)
+    DatabaseCleaner[:active_record].strategy = :transaction
+  end
+
+  config.before(:each) do
+    DatabaseCleaner[:mongoid].start
+    DatabaseCleaner[:active_record].start
+  end
+
+  config.after(:each) do
+    DatabaseCleaner[:mongoid].clean
+    DatabaseCleaner[:active_record].clean
+  end
 end
