@@ -6,5 +6,6 @@ module Boostify
 
   class Charity
     include Boostify::Models::Mongoid::Charity if Boostify.orm == :mongoid
+    include ActiveModel::ForbiddenAttributesProtection
   end
 end
