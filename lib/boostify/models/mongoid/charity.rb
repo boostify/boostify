@@ -19,6 +19,8 @@ module Boostify
 
           field :advocates, type: Integer
           field :income, type: BigDecimal
+
+          field :sort_order, type: Integer
         end
       end
     end
