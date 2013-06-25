@@ -4,6 +4,8 @@ require 'faraday'
 require 'boostify/engine'
 
 require 'boostify/models/donatable'
+require 'boostify/models/active_record/charity'
+require 'boostify/models/active_record/donation'
 require 'boostify/models/mongoid/charity'
 require 'boostify/models/mongoid/donation'
 require 'boostify/jobs/sync_charities'
