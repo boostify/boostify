@@ -1,4 +1,8 @@
-require 'mongoid'
+begin
+  require 'mongoid'
+rescue LoadError
+end
+
 require 'faraday'
 require 'boostify/engine'
 
