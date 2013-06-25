@@ -45,4 +45,6 @@ module Boostify
   def self.charity_api_endpoint
     "#{Boostify.api_endpoint}/shops/#{Boostify.partner_id}/charities"
   end
+
+  CURRENCY = 'EUR'
 end
