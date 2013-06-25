@@ -1,4 +1,5 @@
 require 'mongoid'
+require 'money-rails'
 require 'faraday'
 require 'boostify/engine'
 

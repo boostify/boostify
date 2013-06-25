@@ -20,6 +20,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'haml'
   s.add_dependency 'faraday'
   s.add_dependency 'strong_parameters'
+  s.add_dependency 'money-rails'
 
   s.add_development_dependency 'sqlite3'
   s.add_development_dependency 'rspec-rails'
