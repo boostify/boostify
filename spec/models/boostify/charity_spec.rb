@@ -35,7 +35,7 @@ module Boostify
         end
 
         its(:income) { should == @donation.commission }
-        its(:advocates) { should == 1 }
+        its(:advocates) { should == 0 }
       end
     end
   end

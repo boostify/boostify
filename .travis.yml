@@ -8,8 +8,6 @@ notifications:
 script:
   - rake db:migrate
   - rspec
-  - rails_best_practices
-  - rubocop
 services: mongodb
 env:
   - ORM=mongoid
