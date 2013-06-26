@@ -1,0 +1,5 @@
+%h1 Transactions#index
+%p Find me in app/views/transactions/index.html.haml
+%ul
+  - @transactions.each do |transaction|
+    = link_to "donate #{transaction.my_commission}", transaction_path(transaction)
