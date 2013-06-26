@@ -8,7 +8,7 @@ module Boostify
       if @donation = Donation.create(donation_params)
         create_transaction @donation
         session[:donatable_id] = nil
-        redirect_to donation_path(@donation), notice: pixel_url
+        redirect_to donation_path(@donation), notice: pixel_img
       else
         redirect_to charities_path
       end
@@ -32,7 +32,7 @@ module Boostify
         # (p.e. user is allowed to create a transaction)
       end
 
-      def pixel_url
+      def pixel_img
         src = @donation.pixel_url
         render_to_string partial: 'pixel_img', locals: { src: src.html_safe}
       end
