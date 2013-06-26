@@ -7,6 +7,9 @@ module Boostify
         included do
           include ::Mongoid::Document
           include ::Mongoid::Timestamps
+
+          field :amount, type: Money
+          field :commission, type: Money
         end
       end
     end

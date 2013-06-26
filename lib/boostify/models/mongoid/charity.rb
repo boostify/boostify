@@ -17,11 +17,21 @@ module Boostify
           field :description, type: String
           field :logo, type: String
 
-          field :advocates, type: Integer
-          field :income, type: BigDecimal
+          field :advocates, type: Integer, default: 0
+          field :income, type: Money, default: Money.new(0, Boostify::CURRENCY)
 
           field :sort_order, type: Integer
         end
+
+        private
+
+          def advocate_count
+            donations.distinct(:user_id).count
+          end
+
+          def calculate_income
+            Money.new donations.sum(:'commission.cents'), Boostify::CURRENCY
+          end
       end
     end
   end

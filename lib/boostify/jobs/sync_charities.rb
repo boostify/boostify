@@ -11,7 +11,8 @@ module Boostify
       private
 
         def self.update_or_create_charity(charity_id)
-          charity = Charity.where(boost_id: charity_id).first_or_initialize
+          charity = Boostify::Charity.
+            where(boost_id: charity_id).first_or_initialize
           charity.update_attributes! params(charity_id)
         end
 
