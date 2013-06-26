@@ -37,6 +37,7 @@ RSpec.configure do |config|
   config.before(:each) do
     DatabaseCleaner[:mongoid].start
     DatabaseCleaner[:active_record].start
+    @routes = Boostify::Engine.routes
   end
 
   config.after(:each) do
