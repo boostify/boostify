@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130625123838) do
+ActiveRecord::Schema.define(:version => 20130626092634) do
 
   create_table "boostify_charities", :force => true do |t|
     t.integer  "boost_id"
@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(:version => 20130625123838) do
     t.string   "short_description"
     t.text     "description"
     t.string   "logo"
-    t.integer  "advocates"
+    t.integer  "advocates",         :default => 0
     t.datetime "created_at",                           :null => false
     t.datetime "updated_at",                           :null => false
     t.integer  "sort_order"
@@ -45,5 +45,10 @@ ActiveRecord::Schema.define(:version => 20130625123838) do
 
   add_index "boostify_donations", ["charity_id"], :name => "index_boostify_donations_on_charity_id"
   add_index "boostify_donations", ["donatable_id"], :name => "index_boostify_donations_on_donatable_id"
+
+  create_table "transactions", :force => true do |t|
+    t.float "my_amount"
+    t.float "my_commission"
+  end
 
 end

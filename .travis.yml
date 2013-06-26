@@ -11,3 +11,6 @@ script:
   - rails_best_practices
   - rubocop
 services: mongodb
+env:
+  - ORM=mongoid
+  - ORM=active_record

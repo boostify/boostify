@@ -6,6 +6,9 @@ module Boostify
 
         included do
           monetize :income_cents, with_currency: Boostify::CURRENCY
+
+          attr_accessible :title, :name, :url, :short_description, :logo,
+            :advocates, :income, :boost_id, :description, :income, :sort_order
         end
 
         private
