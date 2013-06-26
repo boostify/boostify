@@ -31,11 +31,20 @@ module Boostify
       context 'when a donation is created' do
         before do
           @donation = Fabricate :donation, charity: @charity
-          @charity.reload
         end
 
         its(:income) { should == @donation.commission }
         its(:advocates) { should == 0 }
+
+        context 'when the donation has a user' do
+          before do
+            @donation.user = User.create!
+            @donation.save!
+          end
+
+          it { @donation.user should be }
+          its(:advocates) { should == 1 }
+        end
       end
     end
   end

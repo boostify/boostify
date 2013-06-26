@@ -39,12 +39,22 @@ module Boostify
   mattr_accessor :favorite_charities
   self.favorite_charities = [1, 44]
 
+  mattr_accessor :current_user_method
+  self.current_user_method = 'current_user'
+
+  mattr_accessor :current_user_class
+  self.current_user_class = 'User'
+
   def self.config
     yield self
   end
 
   def self.donatable_class
     @@donatable_class.constantize
+  end
+
+  def self.current_user_class
+    @@current_user_class.constantize
   end
 
   def self.charity_api_endpoint

@@ -9,7 +9,7 @@ module Boostify
           monetize :commission_cents, with_currency: Boostify::CURRENCY
 
           attr_accessible :amount, :commission, :charity_id, :donatable_id,
-            :charity, :donatable, :status
+            :charity, :donatable, :status, :user, :user_id
         end
       end
     end

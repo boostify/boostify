@@ -12,27 +12,15 @@ module Boostify
 
     has_many :donations, class_name: 'Boostify::Donation'
 
-    after_touch :update_income!
-    after_touch :update_advocates!
+    after_touch :recalculate_cached_fields!
 
     private
 
-      def update_income!
-        update_income
-        save!
-      end
-
-      def update_income
-        self.income = calculate_income
-      end
-
-      def update_advocates!
-        update_advocates
-        save!
-      end
-
-      def update_advocates
-        self.advocates = advocate_count
+      def recalculate_cached_fields!
+        update_attributes!(
+          income: calculate_income,
+          advocates: advocate_count)
+        true
       end
   end
 end
