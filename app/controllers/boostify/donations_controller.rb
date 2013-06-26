@@ -30,11 +30,15 @@ module Boostify
         #TODO create a transaction to the donation
         # do not forget to do some validations
         # (p.e. user is allowed to create a transaction)
+        if defined?(super)
+          super donation
+        end
       end
 
       def pixel_img
         src = @donation.pixel_url
-        render_to_string partial: 'pixel_img', locals: { src: src.html_safe }
+        render_to_string(partial: 'pixel_img', locals: { src: src.html_safe })
+          .html_safe
       end
   end
 end
