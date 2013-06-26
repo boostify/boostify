@@ -3,7 +3,7 @@ require_dependency 'boostify/application_controller'
 module Boostify
   class CharitiesController < ApplicationController
 
-    before_filter :new_donation_from_session, only: [:index]
+    before_filter :new_donation_from_session, only: [:index, :show]
 
     def index
       @charities = Charity.all

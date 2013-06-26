@@ -11,6 +11,8 @@ module Boostify
     belongs_to :charity, class_name: 'Boostify::Charity'
     belongs_to :donatable, class_name: Boostify.donatable_class.to_s
 
+    validates :charity, :donatable, :commission, presence: true
+
     def pixel_url
       query_hash = query_params
       query_hash.merge!({ signature: signature(query_hash) })
