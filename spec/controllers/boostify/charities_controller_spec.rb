@@ -13,7 +13,7 @@ module Boostify
 
       it 'assigns charities as @charities' do
         get :index
-        assigns(:charities).to_a.should eq(@charities)
+        assigns(:charities).sort_by(&:id).should eq(@charities.sort_by(&:id))
       end
     end
 

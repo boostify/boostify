@@ -2,11 +2,13 @@ begin
   require 'mongoid'
 rescue LoadError
 end
-
+require 'money-rails'
 require 'faraday'
 require 'boostify/engine'
 
 require 'boostify/models/donatable'
+require 'boostify/models/active_record/charity'
+require 'boostify/models/active_record/donation'
 require 'boostify/models/mongoid/charity'
 require 'boostify/models/mongoid/donation'
 require 'boostify/jobs/sync_charities'
@@ -48,4 +50,6 @@ module Boostify
   def self.charity_api_endpoint
     "#{Boostify.api_endpoint}/shops/#{Boostify.partner_id}/charities"
   end
+
+  CURRENCY = 'EUR'
 end
