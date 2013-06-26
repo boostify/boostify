@@ -16,7 +16,7 @@ module Boostify
       end
 
       it 'assigns charities as @charities' do
-        assigns(:charities).to_a.should eq(@charities)
+        assigns(:charities).sort_by(&:id).should eq(@charities.sort_by(&:id))
       end
 
       it 'assigns new donation as @donation' do

@@ -23,7 +23,7 @@ module Boostify
 
       it 'sets the boost_id' do
         job.perform
-        Charity.pluck(:boost_id).should == [1, 44]
+        Charity.pluck(:boost_id).sort.should == [1, 44]
       end
 
       context 'when downloading fails' do

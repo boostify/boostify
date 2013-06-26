@@ -20,7 +20,7 @@ RDoc::Task.new(:rdoc) do |rdoc|
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
 
-APP_RAKEFILE = File.expand_path("../spec/dummy/Rakefile", __FILE__)
+APP_RAKEFILE = File.expand_path('../spec/dummy/Rakefile', __FILE__)
 load 'rails/tasks/engine.rake'
 
 Bundler::GemHelper.install_tasks
@@ -28,7 +28,21 @@ Bundler::GemHelper.install_tasks
 require 'rspec/core'
 require 'rspec/core/rake_task'
 
+task active_record: 'app:db:test:prepare' do
+  ENV['ORM'] = 'active_record'
+end
+
+task mongoid: 'app:db:test:prepare' do
+  ENV['ORM'] = 'mongoid'
+end
+
+desc 'Run tests with Mongoid'
+RSpec::Core::RakeTask.new(mongoid_specs: 'mongoid')
+
+desc 'Run tests with ActiveRecord'
+RSpec::Core::RakeTask.new(active_record_specs: 'active_record')
+
 desc 'Run all specs'
-RSpec::Core::RakeTask.new(spec: 'app:db:test:prepare')
+task spec: [:mongoid_specs, :active_record_specs]
 
 task default: :spec

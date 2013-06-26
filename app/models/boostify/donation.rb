@@ -1,14 +1,16 @@
 module Boostify
 
   if Boostify.orm == :active_record
-    class Donation < ActiveRecord::Base; end
+    class Donation < ActiveRecord::Base
+      include Boostify::Models::ActiveRecord::Donation
+    end
   end
 
   class Donation
     include Boostify::Models::Mongoid::Donation if Boostify.orm == :mongoid
     include ActiveModel::ForbiddenAttributesProtection
 
-    belongs_to :charity, class_name: 'Boostify::Charity'
+    belongs_to :charity, class_name: 'Boostify::Charity', touch: true
     belongs_to :donatable, class_name: Boostify.donatable_class.to_s
 
     validates :charity, :donatable, :commission, presence: true
