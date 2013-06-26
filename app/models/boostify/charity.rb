@@ -20,7 +20,6 @@ module Boostify
         update_attributes!(
           income: calculate_income,
           advocates: advocate_count)
-        true
       end
   end
 end
