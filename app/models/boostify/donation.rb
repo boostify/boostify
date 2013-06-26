@@ -10,8 +10,7 @@ module Boostify
     include Boostify::Models::Mongoid::Donation if Boostify.orm == :mongoid
     include ActiveModel::ForbiddenAttributesProtection
 
-    belongs_to :charity, touch: true
-
+    belongs_to :charity, class_name: 'Boostify::Charity', touch: true
     belongs_to :donatable, class_name: Boostify.donatable_class.to_s
 
     def pixel_url
@@ -24,6 +23,7 @@ module Boostify
     private
 
       def query_params
+        #TODO make this not hard coded (soft coded)
         {
           timestamp: Time.now.to_i,
           referal: {

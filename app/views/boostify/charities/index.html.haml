@@ -1,6 +1,9 @@
 %h1 Charities
 %ul
-  - @charities.each do |charity|
-    %li
-      = link_to charity.name, charity_path(charity)
-      = charity.short_description
+- @charities.each do |charity|
+  %li
+    = link_to charity.name, charity_path(charity)
+    = charity.short_description
+    = form_for @donation do |f|
+      = f.hidden_field :charity_id, value: charity.id
+      = f.submit "donate #{@donation.amount}"

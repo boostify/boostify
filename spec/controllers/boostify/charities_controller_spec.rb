@@ -3,11 +3,12 @@ require 'spec_helper'
 module Boostify
 
   describe CharitiesController do
-    before { @routes = Boostify::Engine.routes }
 
     describe 'GET index' do
       before do
-        @charities = (0..5).map { |id| Fabricate :charity, boost_id: id }
+        @charities = (0..5).map { Fabricate :charity }
+        @transaction = Transaction.create! my_amount: 1.2, my_commission: 0.7
+        session[:donatable_id] = @transaction.id
       end
 
       it 'assigns charities as @charities' do

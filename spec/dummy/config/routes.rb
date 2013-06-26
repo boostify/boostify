@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
 
-  mount Boostify::Engine => "/boostify"
+  resources :transactions, only: [:index, :show]
+
+  mount Boostify::Engine => '/boostify'
 end
