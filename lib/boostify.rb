@@ -36,8 +36,8 @@ module Boostify
   mattr_accessor :donatable_class
   self.donatable_class = 'Transaction'
 
-  mattr_accessor :favorite_charities
-  self.favorite_charities = [1, 44]
+  mattr_accessor :favorite_charity_ids
+  self.favorite_charity_ids = [1, 44]
 
   mattr_accessor :current_user_method
   self.current_user_method = 'current_user'

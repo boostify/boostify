@@ -6,9 +6,9 @@ module Boostify
       let(:job) { Boostify::Jobs::SyncCharities }
 
       before do
-        Boostify.favorite_charities = [1, 44]
+        Boostify.favorite_charity_ids = [1, 44]
 
-        Boostify.favorite_charities.each do |charity_id|
+        Boostify.favorite_charity_ids.each do |charity_id|
           url = "#{Boostify.charity_api_endpoint}/#{charity_id}.json"
           stub_http_request(:get, url).
             to_return status: 200, body: charity_response(charity_id)
@@ -70,9 +70,7 @@ module Boostify
             url: "http://boost-project.com/de/charities/#{id}",
             short_description: 'Awesome Charity',
             description: 'Boost our Awesome Charity',
-            logo: 'http://url.to/logo.png',
-            advocates: id,
-            income: 23.42
+            logo: 'http://url.to/logo.png'
           }
         }.to_json
       end
