@@ -16,7 +16,14 @@ describe Boostify::Donation, :feature do
     end
 
     context "when clicking on charity's donate" do
-      before { click_button 'donate 99' }
+      before do
+        Timecop.freeze
+        click_button 'donate 99'
+      end
+
+      after do
+        Timecop.return
+      end
 
       it 'loads Boostify::Donations#show' do
         current_path.should == boostify.donation_path(Boostify::Donation.last)
