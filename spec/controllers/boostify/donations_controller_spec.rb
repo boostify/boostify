@@ -39,10 +39,16 @@ describe Boostify::DonationsController do
           assigns(:donation).should be_a Boostify::Donation
           assigns(:donation).should be_persisted
         end
+      end
 
+      context 'with rendered views' do
         render_views
+
         it 'creates flash message with pixel_url' do
-          flash[:notice].should include(@donation.pixel_url)
+          Timecop.freeze do
+            post :create, donation: @valid_attributes
+            flash[:notice].should include(assigns(:donation).pixel_url)
+          end
         end
       end
     end

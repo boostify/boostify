@@ -3,6 +3,7 @@ require 'coveralls'
 require 'database_cleaner'
 require 'pry'
 require 'webmock/rspec'
+require 'timecop'
 
 SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
   SimpleCov::Formatter::HTMLFormatter,
