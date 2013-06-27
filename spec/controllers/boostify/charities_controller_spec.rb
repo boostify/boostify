@@ -5,7 +5,7 @@ module Boostify
   describe CharitiesController do
 
     before do
-      @transaction = Transaction.create! my_amount: 1.2, my_commission: 0.7
+      @transaction = Fabricate :transaction
       session[:donatable_id] = @transaction.id
     end
 
