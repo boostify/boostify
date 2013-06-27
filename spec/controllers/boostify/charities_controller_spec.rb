@@ -4,16 +4,24 @@ module Boostify
 
   describe CharitiesController do
 
+    before do
+      @transaction = Fabricate :transaction
+      session[:donatable_id] = @transaction.id
+    end
+
     describe 'GET index' do
       before do
         @charities = (0..5).map { Fabricate :charity }
-        @transaction = Transaction.create! my_amount: 1.2, my_commission: 0.7
-        session[:donatable_id] = @transaction.id
+        get :index
       end
 
       it 'assigns charities as @charities' do
-        get :index
         assigns(:charities).sort_by(&:id).should eq(@charities.sort_by(&:id))
+      end
+
+      it 'assigns new donation as @donation' do
+        assigns(:donation).should be
+        assigns(:donation).amount.should eq(@transaction.donatable_amount)
       end
     end
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130626102823) do
+ActiveRecord::Schema.define(:version => 20130626161645) do
 
   create_table "boostify_charities", :force => true do |t|
     t.integer  "boost_id"
@@ -49,8 +49,10 @@ ActiveRecord::Schema.define(:version => 20130626102823) do
   add_index "boostify_donations", ["user_id"], :name => "index_boostify_donations_on_user_id"
 
   create_table "transactions", :force => true do |t|
-    t.float "my_amount"
-    t.float "my_commission"
+    t.integer "my_amount_cents",        :default => 0,     :null => false
+    t.string  "my_amount_currency",     :default => "USD", :null => false
+    t.integer "my_commission_cents",    :default => 0,     :null => false
+    t.string  "my_commission_currency", :default => "USD", :null => false
   end
 
   create_table "users", :force => true do |t|

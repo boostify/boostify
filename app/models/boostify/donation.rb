@@ -16,6 +16,8 @@ module Boostify
 
     after_save :touch_charity
 
+    validates :donatable, :commission, presence: true
+
     def pixel_url
       query_hash = query_params
       query_hash.merge!({ signature: signature(query_hash) })

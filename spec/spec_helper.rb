@@ -3,9 +3,13 @@ require 'coveralls'
 require 'database_cleaner'
 require 'pry'
 require 'webmock/rspec'
+require 'timecop'
 
-SimpleCov.start 'rails'
-Coveralls.wear! 'rails'
+SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
+  SimpleCov::Formatter::HTMLFormatter,
+  Coveralls::SimpleCov::Formatter
+]
+SimpleCov.start
 
 ENV['RAILS_ENV'] ||= 'test'
 
