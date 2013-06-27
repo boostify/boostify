@@ -26,10 +26,6 @@ module Boostify
   # set partner secret
   mattr_accessor :partner_secret
 
-  # set tracker api endpoint
-  mattr_accessor :tracker_api_endpoint
-  @@tracker_api_endpoint = 'https://www.boost-project.com/de/tracker/both.png'
-
   mattr_accessor :orm
   @@orm = :mongoid
 
@@ -62,6 +58,10 @@ module Boostify
 
   def self.charity_api_endpoint
     "#{Boostify.api_endpoint}/shops/#{Boostify.partner_id}/charities"
+  end
+
+  def self.tracker_api_endpoint
+    "#{Boostify.api_endpoint}/tracker/both.png"
   end
 
   CURRENCY = 'EUR'
