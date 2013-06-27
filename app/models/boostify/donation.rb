@@ -10,8 +10,11 @@ module Boostify
     include Boostify::Models::Mongoid::Donation if Boostify.orm == :mongoid
     include ActiveModel::ForbiddenAttributesProtection
 
-    belongs_to :charity, class_name: 'Boostify::Charity', touch: true
+    belongs_to :charity, class_name: 'Boostify::Charity'
     belongs_to :donatable, class_name: Boostify.donatable_class.to_s
+    belongs_to :user, class_name: Boostify.current_user_class.to_s
+
+    after_save :touch_charity
 
     validates :donatable, :commission, presence: true
 
@@ -43,6 +46,10 @@ module Boostify
         OpenSSL::HMAC.hexdigest(OpenSSL::Digest::Digest.new('sha256'),
                                 Boostify.partner_secret,
                                 hash.sort.to_json)
+      end
+
+      def touch_charity
+        charity.touch if charity
       end
   end
 end

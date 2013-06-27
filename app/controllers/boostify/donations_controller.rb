@@ -23,7 +23,7 @@ module Boostify
 
       def donation_params
         params.require(:donation).permit(:amount, :commission, :charity_id)
-          .merge(donatable_id: session[:donatable_id])
+          .merge(donatable_id: session[:donatable_id], user: get_current_user)
       end
 
       def after_donation_creation(donation)

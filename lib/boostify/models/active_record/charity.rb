@@ -14,7 +14,7 @@ module Boostify
         private
 
           def advocate_count
-            donations.uniq.count(:user_id)
+            donations.count(:user_id, distinct: true)
           end
 
           def calculate_income
