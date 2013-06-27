@@ -1,6 +1,11 @@
 module Boostify
   class DonationsController < ApplicationController
 
+    def new
+      session[:donatable_id] = params[:id]
+      redirect_to charities_path
+    end
+
     # in params complete donation needed (with charity, amount, etc.)
     # in session donatable_id needed
     def create
