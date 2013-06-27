@@ -6,4 +6,7 @@
     = charity.short_description
     = form_for @donation do |f|
       = f.hidden_field :charity_id, value: charity.id
-      = f.submit "donate #{@donation.amount}"
+      = f.hidden_field :donatable_id, value: @donation.donatable_id
+      = f.hidden_field :amount, value: @donation.amount
+      = f.hidden_field :commission, value: @donation.commission
+      = f.submit "donate #{@donation.commission}"

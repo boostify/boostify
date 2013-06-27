@@ -5,7 +5,10 @@ module Boostify
 
     describe 'mass assignment is protected' do
       before do
-        @attributes = { status: 'hacker status' }
+        @attributes = {
+          status: 'hacker status',
+          commission: 0.7
+        }
       end
 
       it 'should raise exception, when controller style' do
