@@ -23,7 +23,7 @@ module Boostify
         end
 
         def self.download(charity_id)
-          response = Faraday.get charity_url(charity_id)
+          response = connection.get charity_url(charity_id)
           unless response.success?
             raise "Failed to download Charity with ID=#{charity_id}!\n" <<
               "#{response.inspect}"
@@ -33,6 +33,12 @@ module Boostify
 
         def self.charity_url(charity_id)
           "#{Boostify.charity_api_endpoint}/#{charity_id}.json"
+        end
+
+        def self.connection
+          con = Faraday.new(ssl: { verify: Boostify.ssl_verify })
+          con.basic_auth(ENV['BOOSTIFY_USER'], ENV['BOOSTIFY_PASSWORD'])
+          con
         end
     end
   end

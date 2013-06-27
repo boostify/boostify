@@ -45,6 +45,9 @@ module Boostify
   mattr_accessor :current_user_class
   self.current_user_class = 'User'
 
+  mattr_accessor :ssl_verify
+  self.ssl_verify = true
+
   def self.config
     yield self
   end
