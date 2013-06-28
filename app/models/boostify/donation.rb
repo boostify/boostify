@@ -29,16 +29,15 @@ module Boostify
     private
 
       def query_params
-        #TODO make this not hard coded (soft coded)
         {
-          timestamp: Time.now.to_i,
+          timestamp: Time.now.to_i.to_s,
           referal: {
-            shop_id: Boostify.partner_id
+            shop_id: Boostify.partner_id.to_s
           },
           sale: {
             token: token,
-            amount: 1.34,
-            commission: 1.34
+            amount: amount.to_f.to_s,
+            commission: commission.to_f.to_s
           }
         }
       end
@@ -46,7 +45,7 @@ module Boostify
       def signature(hash)
         OpenSSL::HMAC.hexdigest(OpenSSL::Digest::Digest.new('sha256'),
                                 Boostify.partner_secret,
-                                hash.sort.to_json)
+                                deep_sort(hash).to_json)
       end
 
       def touch_charity
@@ -58,6 +57,10 @@ module Boostify
           random_token = SecureRandom.hex(8)
           break random_token unless Donation.where(token: random_token).exists?
         end
+      end
+
+      def deep_sort(hash)
+        Hash[hash.sort.map { |k, v| [k, v.is_a?(Hash) ? deep_sort(v) : v] }]
       end
   end
 end
