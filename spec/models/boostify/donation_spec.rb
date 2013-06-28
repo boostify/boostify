@@ -20,5 +20,13 @@ module Boostify
         expect { Donation.create @attributes }.to_not raise_exception
       end
     end
+
+    describe '#generate_token' do
+      before { @donation = Fabricate :donation }
+
+      it 'generates a token' do
+        @donation.token.should be
+      end
+    end
   end
 end
