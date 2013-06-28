@@ -4,7 +4,8 @@ module Boostify
       extend ActiveSupport::Concern
 
       included do
-        has_one :boostify_donation, class_name: 'Boostify::Donation'
+        has_one :boostify_donation, class_name: 'Boostify::Donation',
+          inverse_of: :donatable
       end
 
       mattr_accessor :amount_method
