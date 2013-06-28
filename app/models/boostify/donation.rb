@@ -15,6 +15,7 @@ module Boostify
     belongs_to :user, class_name: Boostify.current_user_class.to_s
 
     after_save :touch_charity
+    before_create :generate_token
 
     validates :donatable, :commission, presence: true
 
@@ -35,7 +36,7 @@ module Boostify
             shop_id: Boostify.partner_id
           },
           sale: {
-            token: 'asdfASDF',
+            token: token,
             amount: 1.34,
             commission: 1.34
           }
@@ -50,6 +51,13 @@ module Boostify
 
       def touch_charity
         charity.touch if charity
+      end
+
+      def generate_token
+        self.token ||= loop do
+          random_token = SecureRandom.hex(8)
+          break random_token unless Donation.where(token: random_token).exists?
+        end
       end
   end
 end

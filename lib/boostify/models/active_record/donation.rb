@@ -11,7 +11,7 @@ module Boostify
             allow_nil: true
 
           attr_accessible :amount, :commission, :charity_id, :donatable_id,
-            :charity, :donatable, :status, :user, :user_id
+            :charity, :donatable, :status, :user, :user_id, :token
         end
       end
     end

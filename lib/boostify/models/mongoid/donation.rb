@@ -10,6 +10,8 @@ module Boostify
 
           field :amount, type: Money
           field :commission, type: Money
+          field :token, type: String
+          index({ token: 1 }, { unique: true })
         end
       end
     end
