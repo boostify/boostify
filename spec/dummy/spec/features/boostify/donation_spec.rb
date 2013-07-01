@@ -3,13 +3,15 @@ require 'spec_helper'
 describe Boostify::Donation, :feature do
 
   before do
-    Fabricate :charity
+    @charity = Fabricate :charity
     Transaction.create! my_amount: 100.0, my_commission: 99.0
-    visit transactions_path
   end
 
   context 'when clicking on donate' do
-    before  { click_on 'donate 99' }
+    before  do
+      visit transactions_path
+      click_on 'donate 99'
+    end
 
     it 'loads Boostify::Charities#index' do
       current_path.should == boostify.charities_path
@@ -37,6 +39,17 @@ describe Boostify::Donation, :feature do
       it 'created a new Transaction' do
         Transaction.count.should eq(2)
       end
+    end
+  end
+
+  context 'when visiting charities without donatable' do
+
+    it 'can visit index' do
+      visit boostify.charities_path
+    end
+
+    it 'can visit single charity' do
+      visit boostify.charity_path(@charity)
     end
   end
 end

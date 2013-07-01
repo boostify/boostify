@@ -16,10 +16,12 @@ module Boostify
     private
 
       def new_donation_from_session
-        donatable = Boostify.donatable_class.find session[:donatable_id]
-        @donation = Donation.new donatable: donatable,
-          amount: donatable.donatable_amount,
-          commission: donatable.donatable_commission
+        if session[:donatable_id]
+          donatable = Boostify.donatable_class.find session[:donatable_id]
+            @donation = Donation.new donatable: donatable,
+            amount: donatable.donatable_amount,
+            commission: donatable.donatable_commission
+        end
       end
   end
 end
