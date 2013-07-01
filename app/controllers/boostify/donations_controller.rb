@@ -1,5 +1,5 @@
 module Boostify
-  class DonationsController < ApplicationController
+  class DonationsController < Boostify::ApplicationController
 
     def new
       session[:donatable_id] = params[:id]
