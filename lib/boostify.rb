@@ -16,6 +16,9 @@ require 'boostify/jobs/sync_charities'
 require 'haml'
 require 'strong_parameters'
 
+I18n.load_path += Dir[File.expand_path(File.join(File.dirname(__FILE__),
+  '../locales', '*.yml')).to_s]
+
 module Boostify
   mattr_accessor :api_endpoint
   self.api_endpoint = 'https://www.boost-project.com/network'
