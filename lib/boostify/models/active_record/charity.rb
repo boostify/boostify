@@ -8,7 +8,8 @@ module Boostify
           monetize :income_cents, with_currency: Boostify::CURRENCY
 
           attr_accessible :title, :name, :url, :short_description, :logo,
-            :advocates, :income, :boost_id, :description, :income, :sort_order
+            :advocates, :income, :boost_id, :description, :income, :sort_order,
+            :cover
         end
 
         module ClassMethods

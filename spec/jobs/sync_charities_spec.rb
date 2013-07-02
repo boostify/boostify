@@ -26,6 +26,17 @@ module Boostify
         Charity.pluck(:boost_id).sort.should == [1, 44]
       end
 
+      context 'attributes' do
+        before { job.perform }
+
+        [:id, :title, :name, :url, :short_description, :description, :logo,
+          :cover].each do |attr|
+          it "sets attribute #{attr}" do
+            Charity.pluck(attr).compact.should have(2).items
+          end
+        end
+      end
+
       context 'when downloading fails' do
         before do
           Faraday::Response.any_instance.stub(:success?).and_return(false)
@@ -70,7 +81,8 @@ module Boostify
             url: "http://boost-project.com/de/charities/#{id}",
             short_description: 'Awesome Charity',
             description: 'Boost our Awesome Charity',
-            logo: 'http://url.to/logo.png'
+            logo: 'http://url.to/logo.png',
+            cover: 'http://url.to/cover.png'
           }
         }.to_json
       end
