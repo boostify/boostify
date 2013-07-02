@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130628104520) do
+ActiveRecord::Schema.define(:version => 20130702141640) do
 
   create_table "boostify_charities", :force => true do |t|
     t.integer  "boost_id"
@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(:version => 20130628104520) do
     t.integer  "sort_order"
     t.integer  "income_cents",      :default => 0,     :null => false
     t.string   "income_currency",   :default => "EUR", :null => false
+    t.string   "cover"
   end
 
   add_index "boostify_charities", ["sort_order"], :name => "index_boostify_charities_on_sort_order"
