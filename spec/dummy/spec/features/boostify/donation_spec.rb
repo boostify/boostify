@@ -4,6 +4,7 @@ describe Boostify::Donation, :feature do
 
   before do
     @charity = Fabricate :charity
+    Boostify.favorite_charity_ids = [@charity.boost_id]
     Transaction.create! my_amount: 100.0, my_commission: 99.0
   end
 

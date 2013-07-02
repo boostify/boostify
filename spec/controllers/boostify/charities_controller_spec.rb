@@ -9,7 +9,10 @@ module Boostify
     end
 
     describe 'GET index' do
-      before { @charities = (0..5).map { Fabricate :charity } }
+      before do
+        @charities = (0..5).map { Fabricate :charity }
+        Boostify.favorite_charity_ids = @charities.map(&:boost_id)
+      end
 
       context 'with available donatable_id' do
         before do

@@ -26,6 +26,13 @@ module Boostify
        query_hash.to_query].join
     end
 
+    def self.from_donatable(donatable)
+      self.new(
+        donatable: donatable,
+        amount: donatable.donatable_amount,
+        commission: donatable.donatable_commission)
+    end
+
     private
 
       def query_params

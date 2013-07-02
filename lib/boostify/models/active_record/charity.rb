@@ -11,6 +11,17 @@ module Boostify
             :advocates, :income, :boost_id, :description, :income, :sort_order
         end
 
+        module ClassMethods
+
+          private
+
+            def sorted_favorites
+              scoped.
+                where(boost_id: Boostify.favorite_charity_ids).
+                order('sort_order DESC, created_at DESC')
+            end
+        end
+
         private
 
           def advocate_count
