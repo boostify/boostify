@@ -6,7 +6,7 @@ module Boostify
     before_filter :new_donation_from_session, only: [:index, :show]
 
     def index
-      @charities = Charity.all
+      @charities = Charity.favorites
     end
 
     def show
@@ -18,9 +18,7 @@ module Boostify
       def new_donation_from_session
         if session[:donatable_id]
           donatable = Boostify.donatable_class.find session[:donatable_id]
-            @donation = Donation.new donatable: donatable,
-            amount: donatable.donatable_amount,
-            commission: donatable.donatable_commission
+          @donation = Donation.from_donatable donatable
         end
       end
   end

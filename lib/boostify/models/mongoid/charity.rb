@@ -23,6 +23,19 @@ module Boostify
           field :sort_order, type: Integer
         end
 
+        module ClassMethods
+
+          private
+
+            # Find favorite charities sorted by sort_order desc, created_at
+            # desc.
+            def sorted_favorites
+              scoped.
+                in(boost_id: Boostify.favorite_charity_ids).
+                desc(:sort_order).desc(:created_at)
+            end
+        end
+
         private
 
           def advocate_count
