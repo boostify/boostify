@@ -16,6 +16,7 @@ module Boostify
           field :short_description, type: String
           field :description, type: String
           field :logo, type: String
+          field :cover, type: String
 
           field :advocates, type: Integer, default: 0
           field :income, type: Money, default: Money.new(0, Boostify::CURRENCY)
