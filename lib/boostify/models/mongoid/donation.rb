@@ -12,6 +12,7 @@ module Boostify
           field :commission, type: Money
           field :token, type: String
           index({ token: 1 }, { unique: true })
+          index({ donatable_id: 1 }, { unique: true })
         end
       end
     end
