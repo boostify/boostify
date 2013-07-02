@@ -14,6 +14,15 @@ module Boostify
 
     after_touch :recalculate_cached_fields!
 
+    # Find your favorite Charities.
+    #
+    # Results are sorted by sort_order descending.
+    #
+    # @return [Array<Charity>] Charities
+    def self.favorites
+      sorted_favorites
+    end
+
     private
 
       def recalculate_cached_fields!

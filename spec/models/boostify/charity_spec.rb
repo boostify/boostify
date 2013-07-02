@@ -47,5 +47,34 @@ module Boostify
         end
       end
     end
+
+    describe '.favorites' do
+      let(:charities) { Charity.favorites }
+
+      before do
+        @charities = 3.times.map { |i| Fabricate :charity, boost_id: i + 1 }
+        @first, @second, @third = @charities
+        Boostify.favorite_charity_ids = [@second, @third].map(&:boost_id)
+      end
+
+      subject { charities }
+
+      it { should have(2).items }
+      it { should include @second }
+      it { should include @third }
+
+      context 'with sort_order specified' do
+        before do
+          @second.sort_order = 1
+          @second.save!
+          @third.sort_order = 2
+          @third.save!
+        end
+
+        it { should have(2).items }
+        its(:first) { should == @third }
+        its(:last) { should == @second }
+      end
+    end
   end
 end
