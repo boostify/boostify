@@ -13,7 +13,8 @@ module Boostify
       if @donation.save
         after_donation_creation @donation
         session[:donatable_id] = nil
-        redirect_to donation_path(@donation), notice: pixel_img
+        flash[:notice] = pixel_img + t('flash.donation.success')
+        redirect_to donation_path(@donation)
       else
         redirect_to charities_path
       end
