@@ -10,6 +10,7 @@ module Boostify
     # in session donatable_id needed
     def create
       @donation = Donation.new(donation_params)
+      before_donation_creation @donation
       if @donation.save
         after_donation_creation @donation
         session[:donatable_id] = nil
@@ -36,6 +37,12 @@ module Boostify
         #TODO create a transaction to the donation
         # do not forget to do some validations
         # (p.e. user is allowed to create a transaction)
+        if defined?(super)
+          super donation
+        end
+      end
+
+      def before_donation_creation(donation)
         if defined?(super)
           super donation
         end
