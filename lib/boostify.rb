@@ -70,7 +70,8 @@ module Boostify
   CURRENCY = 'EUR'
 
   module Links
-    FAQ = "https://www.boost-project.com/de/faq"
-    PRIVACY = "https://www.boost-project.com/de/imprint"
+    FAQ = 'https://www.boost-project.com/de/faq'
+    PRIVACY = 'https://www.boost-project.com/de/imprint'
+    AGB = 'https://www.boost-project.com/de/agb'
   end
 end
