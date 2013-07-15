@@ -1,5 +1,7 @@
 module Boostify
   class DonationsController < Boostify::ApplicationController
+    respond_to :html, except: :update
+    respond_to :json, only: :update
 
     def new
       session[:donatable_id] = params[:id]
@@ -21,9 +23,13 @@ module Boostify
       end
     end
 
+    def update
+      donation.update_attributes update_donation_params
+      respond_with donation
+    end
+
     def show
-      @donation = Donation.find params[:id]
-      #TODO redirect to boost, if no charity given
+      respond_with donation
     end
 
     private
@@ -31,6 +37,10 @@ module Boostify
       def donation_params
         params.require(:donation).permit(:amount, :commission, :charity_id)
           .merge(donatable_id: session[:donatable_id], user: get_current_user)
+      end
+
+      def update_donation_params
+        params.require(:donation).permit(:charity_id)
       end
 
       def after_donation_creation(donation)
@@ -52,6 +62,10 @@ module Boostify
         src = @donation.pixel_url
         render_to_string(partial: 'pixel_img', locals: { src: src.html_safe })
           .html_safe
+      end
+
+      def donation
+        @donation ||= Donation.find params[:id]
       end
   end
 end
