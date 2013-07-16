@@ -1,7 +1,11 @@
 module Boostify
   class DonationsController < Boostify::ApplicationController
+    include SignatureVerificationHelper
+
     respond_to :html, except: :update
     respond_to :json, only: :update
+
+    before_filter :verify_signature!, only: :update
 
     def new
       session[:donatable_id] = params[:id]

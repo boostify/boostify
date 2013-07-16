@@ -85,10 +85,16 @@ describe Boostify::DonationsController do
 
   describe 'PUT update' do
     let(:donation) { Fabricate.build :donation, charity: nil, id: 23 }
+    let(:timestamp) { Time.now.to_i.to_s }
     let(:attr) do
-      { id: donation.id,
-        donation: { charity_id: '42', commission: '6.66' },
-        format: :json }
+      params = {
+        id: donation.id,
+        timestamp: timestamp,
+        donation: { charity_id: 42, commission: 6.66 }
+      }
+      params = Boostify::Signature.sign(params)
+      params[:format] = :json
+      params
     end
 
     before do
@@ -102,7 +108,6 @@ describe Boostify::DonationsController do
     end
 
     context 'valid attributes' do
-
       before { put :update, attr }
 
       context 'donation' do
@@ -121,7 +126,14 @@ describe Boostify::DonationsController do
       end
     end
 
-    context 'when saving fails' do
+    context 'invalid timestamp' do
+      let(:timestamp) { 16.minutes.ago.to_i }
+      before { put :update, attr }
+      it { assigns(:donation).should be_nil }
+      it { response.status.should == 422 }
+    end
+
+    context 'invalid donation' do
       before do
         donation.donatable = nil
         put :update, attr
