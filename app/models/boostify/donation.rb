@@ -20,10 +20,8 @@ module Boostify
     validates :donatable, :commission, presence: true
 
     def pixel_url
-      query_hash = query_params
-      query_hash.merge!({ signature: signature(query_hash) })
       [Boostify.tracker_api_endpoint, '?',
-       query_hash.to_query].join
+       Boostify::Signature.sign(query_params).to_query].join ''
     end
 
     def self.from_donatable(donatable)
@@ -37,7 +35,6 @@ module Boostify
 
       def query_params
         {
-          timestamp: Time.now.to_i.to_s,
           referal: {
             shop_id: Boostify.partner_id.to_s
           },
@@ -49,12 +46,6 @@ module Boostify
         }
       end
 
-      def signature(hash)
-        OpenSSL::HMAC.hexdigest(OpenSSL::Digest::Digest.new('sha256'),
-                                Boostify.partner_secret,
-                                deep_sort(hash).to_json)
-      end
-
       def touch_charity
         charity.touch if charity
       end
@@ -64,10 +55,6 @@ module Boostify
           random_token = SecureRandom.hex(8)
           break random_token unless Donation.where(token: random_token).exists?
         end
-      end
-
-      def deep_sort(hash)
-        Hash[hash.sort.map { |k, v| [k, v.is_a?(Hash) ? deep_sort(v) : v] }]
       end
   end
 end

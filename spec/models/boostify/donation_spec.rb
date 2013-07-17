@@ -28,18 +28,5 @@ module Boostify
         @donation.token.should be
       end
     end
-
-    describe 'private #signature' do
-      def signature(hash)
-        Donation.new.send(:signature, hash)
-      end
-
-      let(:hasha) { { a: 1, b: { c: 3, d: 4 } } }
-      let(:hashd) { { b: { d: 4, c: 3 }, a: 1 } }
-
-      it 'calculates the same signature' do
-        signature(hasha).should == signature(hashd)
-      end
-    end
   end
 end
