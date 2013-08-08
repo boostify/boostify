@@ -28,5 +28,26 @@ module Boostify
         @donation.token.should be
       end
     end
+
+    describe '#charity' do
+      let(:donation) { Donation.new }
+      subject { donation }
+      it { should have(:no).errors_on :charity }
+
+      context 'with charity set' do
+        let(:charity) { Charity.new }
+        before { donation.charity = charity }
+        it { should have(:no).errors_on :charity }
+
+        context 'when charity_id is changed' do
+          before do
+            donation.stub(charity_id_changed?: true)
+            donation.stub(charity_id_was: 'not nil')
+          end
+
+          it { should have(1).error_on :charity }
+        end
+      end
+    end
   end
 end

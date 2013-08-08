@@ -75,7 +75,7 @@ describe Boostify::DonationsController do
 
     before do
       @donation = Boostify::Donation.create! @valid_attributes
-      get :show, id: @donation.id.to_s
+      get :show, id: @donation.token
     end
 
     it 'assigns @donation' do
@@ -87,28 +87,32 @@ describe Boostify::DonationsController do
     let(:donation) { Fabricate.build :donation, charity: nil, id: 23 }
     let(:timestamp) { Time.now.to_i.to_s }
     let(:attr) do
-      params = {
-        id: donation.id,
+      {
+        id: donation.token,
         timestamp: timestamp,
         donation: { charity_id: 42, commission: 6.66 }
       }
-      params = Boostify::Signature.sign(params)
+    end
+    let(:signed_attr) do
+      params = Boostify::Signature.sign(attr)
       params[:format] = :json
       params
     end
 
     before do
-      Boostify::Donation.stub(:find).with(donation.id.to_s).and_return(donation)
+      donation.send(:generate_token)
+      Boostify::Donation.stub(:where).with(token: donation.token).
+        and_return([donation])
     end
 
     context 'with format != json' do
-      before { put :update, attr.merge(format: :html) }
+      before { put :update, signed_attr.merge(format: :html) }
       it { response.status.should == 406 }
       it { response.body.should be_blank }
     end
 
     context 'valid attributes' do
-      before { put :update, attr }
+      before { put :update, signed_attr }
 
       context 'donation' do
         subject { assigns(:donation) }
@@ -128,20 +132,33 @@ describe Boostify::DonationsController do
 
     context 'invalid timestamp' do
       let(:timestamp) { 16.minutes.ago.to_i }
-      before { put :update, attr }
+      before { put :update, signed_attr }
       it { assigns(:donation).should be_nil }
       it { response.status.should == 422 }
     end
 
-    context 'invalid donation' do
-      before do
-        donation.donatable = nil
-        put :update, attr
-      end
-      it { assigns(:donation).should_not be_persisted }
+    shared_examples_for 'invalid donation' do
       subject { response }
       it { should_not be_a_redirect }
       its(:status) { should == 422 }
+      it { assigns(:donation).should_not be_valid }
+    end
+
+    context 'invalid donation' do
+      before do
+        donation.commission = nil
+        put :update, signed_attr
+      end
+      it_behaves_like 'invalid donation'
+    end
+
+    context 'when changing charity_id' do
+      before do
+        donation.update_attributes! charity_id: 42
+        attr[:donation][:charity_id] = 23
+        put :update, signed_attr
+      end
+      it_behaves_like 'invalid donation'
     end
   end
 end

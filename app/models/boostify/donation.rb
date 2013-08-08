@@ -18,6 +18,7 @@ module Boostify
     before_create :generate_token
 
     validates :donatable, :commission, presence: true
+    validate :charity_id, :lock_charity
 
     def pixel_url
       [Boostify.tracker_api_endpoint, '?',
@@ -31,12 +32,17 @@ module Boostify
         commission: donatable.donatable_commission)
     end
 
+    def to_param
+      token
+    end
+
     private
 
       def query_params
         {
           referal: {
-            shop_id: Boostify.partner_id.to_s
+            shop_id: Boostify.partner_id.to_s,
+            charity_id: charity_id.to_s
           },
           sale: {
             token: token,
@@ -54,6 +60,12 @@ module Boostify
         self.token ||= loop do
           random_token = SecureRandom.hex(8)
           break random_token unless Donation.where(token: random_token).exists?
+        end
+      end
+
+      def lock_charity
+        if charity_id_changed? && !charity_id_was.nil?
+          errors.add(:charity, 'must not be changed once set')
         end
       end
   end

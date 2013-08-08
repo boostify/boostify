@@ -48,9 +48,6 @@ module Boostify
       end
 
       def after_donation_creation(donation)
-        #TODO create a transaction to the donation
-        # do not forget to do some validations
-        # (p.e. user is allowed to create a transaction)
         if defined?(super)
           super donation
         end
@@ -69,7 +66,7 @@ module Boostify
       end
 
       def donation
-        @donation ||= Donation.find params[:id]
+        @donation ||= Donation.where(token: params[:id]).first
       end
   end
 end
