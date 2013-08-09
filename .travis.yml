@@ -7,7 +7,7 @@ notifications:
   email: false
 script:
   - rake db:migrate
-  - rspec
+  - bundle exec rspec
 services: mongodb
 env:
   - ORM=mongoid
