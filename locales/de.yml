@@ -2,3 +2,8 @@ de:
   flash:
     donation:
       success: Erfolgreich gespendet
+      other_charity: Vielen Dank. Sie werden weitergeleitet.
+  boostify:
+    donations:
+      show:
+        goto: Weiter zu

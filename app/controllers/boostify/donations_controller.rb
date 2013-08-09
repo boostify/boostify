@@ -20,7 +20,7 @@ module Boostify
       if @donation.save
         after_donation_creation @donation
         session[:donatable_id] = nil
-        flash[:notice] = pixel_img + t('flash.donation.success')
+        set_after_create_flash_message
         redirect_to donation_path(@donation)
       else
         redirect_to charities_path
@@ -63,6 +63,11 @@ module Boostify
         src = @donation.pixel_url
         render_to_string(partial: 'pixel_img', locals: { src: src.html_safe })
           .html_safe
+      end
+
+      def set_after_create_flash_message
+        key = @donation.charity.nil? ? :other_charity : :success
+        flash[:notice] = pixel_img << t(key, scope: [:flash, :donation])
       end
 
       def donation

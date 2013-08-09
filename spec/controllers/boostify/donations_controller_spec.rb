@@ -17,7 +17,6 @@ describe Boostify::DonationsController do
     before { session[:donatable_id] = @transaction.id }
 
     context 'with valid attributes' do
-
       it 'calls after_donation_creation' do
         Boostify::DonationsController.any_instance
           .should_receive(:after_donation_creation)
@@ -25,7 +24,6 @@ describe Boostify::DonationsController do
       end
 
       context 'after request' do
-
         before do
           post :create, donation: @valid_attributes
           @donation = Boostify::Donation.last
@@ -41,20 +39,34 @@ describe Boostify::DonationsController do
         end
       end
 
-      context 'with rendered views' do
+      context 'flash message' do
         render_views
-
-        it 'creates flash message with pixel_url' do
-          Timecop.freeze do
-            post :create, donation: @valid_attributes
-            flash[:notice].should include(assigns(:donation).pixel_url)
-          end
+        before do
+          Timecop.freeze
+          post :create, donation: @valid_attributes
         end
+        after { Timecop.return }
+        subject { flash[:notice] }
+        it { should include assigns(:donation).pixel_url }
+        it { should include 'successfully donated' }
+      end
+
+      context 'without selecting a charity' do
+        render_views
+        before do
+          @valid_attributes.delete :charity_id
+          Timecop.freeze
+          post :create, donation: @valid_attributes
+        end
+        after { Timecop.return }
+
+        subject { flash[:notice] }
+        it { should include assigns(:donation).pixel_url }
+        it { should include 'redirected' }
       end
     end
 
     context 'with invalid attributes' do
-
       before do
         @invalid_attributes = @valid_attributes.merge({ commission: nil })
       end
@@ -72,14 +84,23 @@ describe Boostify::DonationsController do
   end
 
   describe 'GET show' do
-
-    before do
-      @donation = Boostify::Donation.create! @valid_attributes
-      get :show, id: @donation.token
-    end
+    let(:attributes) { @valid_attributes }
+    let(:donation) { Boostify::Donation.create! attributes }
+    subject { get :show, id: donation.token }
 
     it 'assigns @donation' do
-      assigns(:donation).should eq(@donation)
+      subject
+      assigns(:donation).should eq(donation)
+    end
+
+    context 'without charity_id' do
+      render_views
+      before do
+        attributes.delete :charity_id
+        subject
+      end
+
+      it { response.body.should include 'Go to' }
     end
   end
 

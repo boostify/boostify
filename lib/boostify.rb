@@ -75,5 +75,6 @@ module Boostify
     FAQ = 'https://www.boost-project.com/de/faq'
     PRIVACY = 'https://www.boost-project.com/de/imprint'
     AGB = 'https://www.boost-project.com/de/agb'
+    CHARITIES = 'https://www.boost-project.com/de/charities'
   end
 end
