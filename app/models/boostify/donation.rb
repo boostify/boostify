@@ -18,7 +18,7 @@ module Boostify
     before_create :generate_token
 
     validates :donatable, :commission, presence: true
-    validate :charity_id, :lock_charity
+    validate :lock_charity
 
     def pixel_url
       [Boostify.tracker_api_endpoint, '?',
