@@ -2,3 +2,8 @@ en:
   flash:
     donation:
       success: successfully donated
+      other_charity: Thank you. You are being redirected.
+  boostify:
+    donations:
+      show:
+        goto: Go to

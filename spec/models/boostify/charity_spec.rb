@@ -2,6 +2,36 @@ require 'spec_helper'
 
 module Boostify
   describe Charity do
+    describe 'validations' do
+      let(:charity) { Charity.new }
+      subject { charity }
+
+      describe '#boost_id' do
+        it { should have(1).error_on(:boost_id) }
+
+        context 'when boost_id is present' do
+          before { charity.boost_id = 42 }
+          it { should have(:no).errors_on(:boost_id) }
+
+          context 'when using the same boost_id again' do
+            before { Fabricate :charity, boost_id: 42 }
+            it { should have(1).error_on(:boost_id) }
+          end
+        end
+      end
+
+      [:title, :name, :url, :short_description, :description, :logo].
+        each do |att|
+
+        describe "##{att}" do
+          it { should have(1).error_on(att) }
+          context "with :#{att} present" do
+            before { charity.send "#{att}=", 'Here I am' }
+            it { should have(:no).errors_on(att) }
+          end
+        end
+      end
+    end
 
     describe 'mass assignment is protected' do
       before do
@@ -18,7 +48,7 @@ module Boostify
       end
     end
 
-    describe 'after_touch callbacks' do
+    describe '#update_cached_fields' do
       before do
         @charity = Fabricate :charity
       end

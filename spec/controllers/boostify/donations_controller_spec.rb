@@ -4,12 +4,13 @@ describe Boostify::DonationsController do
 
   before do
     @transaction = Transaction.create! my_amount: 1.2, my_commission: 0.70
-    @charity = Fabricate :charity
+    @charity_attributes = Fabricate.attributes_for :charity
+    @charity = Boostify::Charity.create! @charity_attributes
     @valid_attributes = {
       donatable_id: @transaction.id,
       amount: @transaction.my_amount,
       commission: @transaction.my_commission,
-      charity_id: @charity.id.to_s
+      charity_id: @charity.boost_id.to_s
     }
   end
 
@@ -17,7 +18,6 @@ describe Boostify::DonationsController do
     before { session[:donatable_id] = @transaction.id }
 
     context 'with valid attributes' do
-
       it 'calls after_donation_creation' do
         Boostify::DonationsController.any_instance
           .should_receive(:after_donation_creation)
@@ -25,7 +25,6 @@ describe Boostify::DonationsController do
       end
 
       context 'after request' do
-
         before do
           post :create, donation: @valid_attributes
           @donation = Boostify::Donation.last
@@ -41,20 +40,34 @@ describe Boostify::DonationsController do
         end
       end
 
-      context 'with rendered views' do
+      context 'flash message' do
         render_views
-
-        it 'creates flash message with pixel_url' do
-          Timecop.freeze do
-            post :create, donation: @valid_attributes
-            flash[:notice].should include(assigns(:donation).pixel_url)
-          end
+        before do
+          Timecop.freeze
+          post :create, donation: @valid_attributes
         end
+        after { Timecop.return }
+        subject { flash[:notice] }
+        it { should include assigns(:donation).pixel_url }
+        it { should include 'successfully donated' }
+      end
+
+      context 'without selecting a charity' do
+        render_views
+        before do
+          @valid_attributes.delete :charity_id
+          Timecop.freeze
+          post :create, donation: @valid_attributes
+        end
+        after { Timecop.return }
+
+        subject { flash[:notice] }
+        it { should include assigns(:donation).pixel_url }
+        it { should include 'redirected' }
       end
     end
 
     context 'with invalid attributes' do
-
       before do
         @invalid_attributes = @valid_attributes.merge({ commission: nil })
       end
@@ -72,49 +85,67 @@ describe Boostify::DonationsController do
   end
 
   describe 'GET show' do
-
-    before do
-      @donation = Boostify::Donation.create! @valid_attributes
-      get :show, id: @donation.id.to_s
+    render_views
+    let(:attributes) do
+      Fabricate.attributes_for :donation, charity_id: @charity.boost_id
     end
+    let(:donation) { Boostify::Donation.create! attributes }
+    subject { get :show, id: donation.token }
 
     it 'assigns @donation' do
-      assigns(:donation).should eq(@donation)
+      subject
+      assigns(:donation).should eq(donation)
+    end
+
+    it 'does not show the link to donate via boost' do
+      subject
+      response.body.should_not include 'Go to'
+    end
+
+    context 'without charity_id' do
+      before do
+        attributes.delete :charity_id
+        subject
+      end
+
+      it { response.body.should include 'Go to' }
     end
   end
 
   describe 'PUT update' do
-    let(:donation) { Fabricate.build :donation, charity: nil, id: 23 }
+    let(:charity) { @charity }
+    let(:donation) { Fabricate :donation, charity: nil, id: 23 }
     let(:timestamp) { Time.now.to_i.to_s }
     let(:attr) do
-      params = {
-        id: donation.id,
+      {
+        id: donation.token,
         timestamp: timestamp,
-        donation: { charity_id: 42, commission: 6.66 }
+        donation: {
+          charity: @charity_attributes,
+          commission: 6.66
+        }
       }
-      params = Boostify::Signature.sign(params)
+    end
+    let(:signed_attr) do
+      params = HMACAuth::Signature.sign(attr, secret: Boostify.partner_secret)
       params[:format] = :json
       params
     end
 
-    before do
-      Boostify::Donation.stub(:find).with(donation.id.to_s).and_return(donation)
-    end
-
     context 'with format != json' do
-      before { put :update, attr.merge(format: :html) }
+      before { put :update, signed_attr.merge(format: :html) }
       it { response.status.should == 406 }
       it { response.body.should be_blank }
     end
 
     context 'valid attributes' do
-      before { put :update, attr }
+      before { put :update, signed_attr }
 
       context 'donation' do
         subject { assigns(:donation) }
         it { should == donation }
         it { should be_persisted }
-        it { subject.charity_id.to_s.should == '42' }
+        it { subject.charity.boost_id.to_s.should == charity.boost_id.to_s }
         it { subject.commission.fractional.should_not == 666 }
       end
 
@@ -126,22 +157,43 @@ describe Boostify::DonationsController do
       end
     end
 
+    context 'with a new charity' do
+      before do
+        attr[:donation][:charity] = Fabricate.attributes_for :charity
+      end
+
+      subject { -> { put :update, signed_attr } }
+
+      it { should change(Boostify::Charity, :count).from(1).to(2) }
+
+      context 'after' do
+        before { subject.call }
+
+        it { assigns(:donation).charity.should_not == charity }
+      end
+    end
+
     context 'invalid timestamp' do
       let(:timestamp) { 16.minutes.ago.to_i }
-      before { put :update, attr }
+      before { put :update, signed_attr }
       it { assigns(:donation).should be_nil }
       it { response.status.should == 422 }
     end
 
-    context 'invalid donation' do
-      before do
-        donation.donatable = nil
-        put :update, attr
-      end
-      it { assigns(:donation).should_not be_persisted }
+    shared_examples_for 'invalid donation' do
       subject { response }
       it { should_not be_a_redirect }
       its(:status) { should == 422 }
+      it { assigns(:donation).should_not be_valid }
+    end
+
+    context 'when changing charity_id' do
+      before do
+        donation.update_attributes! charity: charity
+        attr[:donation][:charity][:boost_id] = charity.boost_id + 1
+        put :update, signed_attr
+      end
+      it_behaves_like 'invalid donation'
     end
   end
 end

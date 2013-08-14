@@ -3,6 +3,12 @@
 %p Find me in app/views/boostify/donation/show.html.haml
 
 - flash.each do |name, message|
-    = message
+  = message
 
 %pre= @donation.inspect
+
+- if @donation.charity.nil?
+  = link_to Boostify::Links::CHARITIES do
+    = t '.goto'
+    %em
+      boost
