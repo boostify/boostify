@@ -4,9 +4,8 @@ rescue LoadError
 end
 require 'money-rails'
 require 'faraday'
+require 'hmac_auth'
 require 'boostify/engine' if defined?(Rails)
-
-require 'boostify/signature'
 
 require 'boostify/models/donatable'
 require 'boostify/models/active_record/charity'

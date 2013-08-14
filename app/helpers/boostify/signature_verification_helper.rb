@@ -2,7 +2,8 @@ module Boostify
   module SignatureVerificationHelper
 
     def verify_signature!
-      Signature.verify(params) || head(:unprocessable_entity)
+      HMACAuth::Signature.verify(params, secret: Boostify.partner_secret) ||
+        head(:unprocessable_entity)
     end
 
   end

@@ -22,8 +22,11 @@ module Boostify
     validate :lock_charity
 
     def pixel_url
-      [Boostify.tracker_api_endpoint, '?',
-       Boostify::Signature.sign(query_params).to_query].join ''
+      [
+        Boostify.tracker_api_endpoint, '?',
+         HMACAuth::Signature.
+           sign(query_params, secret: Boostify.partner_secret).to_query
+      ].join ''
     end
 
     def self.from_donatable(donatable)

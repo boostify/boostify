@@ -127,7 +127,7 @@ describe Boostify::DonationsController do
       }
     end
     let(:signed_attr) do
-      params = Boostify::Signature.sign(attr)
+      params = HMACAuth::Signature.sign(attr, secret: Boostify.partner_secret)
       params[:format] = :json
       params
     end
