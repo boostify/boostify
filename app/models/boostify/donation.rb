@@ -10,12 +10,13 @@ module Boostify
     include Boostify::Models::Mongoid::Donation if Boostify.orm == :mongoid
     include ActiveModel::ForbiddenAttributesProtection
 
-    belongs_to :charity, class_name: 'Boostify::Charity'
+    belongs_to :charity, class_name: 'Boostify::Charity',
+      primary_key: :boost_id
     belongs_to :donatable, class_name: Boostify.donatable_class.to_s
     belongs_to :user, class_name: Boostify.current_user_class.to_s
 
-    after_save :touch_charity
     before_create :generate_token
+    after_save :update_charity_cached_fields
 
     validates :donatable, :commission, presence: true
     validate :lock_charity
@@ -52,8 +53,10 @@ module Boostify
         }
       end
 
-      def touch_charity
-        charity.touch if charity
+      def update_charity_cached_fields
+        if charity.present? && (user_id_changed? || commission_changed?)
+          charity.update_cached_fields!
+        end
       end
 
       def generate_token

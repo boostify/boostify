@@ -18,7 +18,7 @@ module Boostify
       end
     end
 
-    describe 'after_touch callbacks' do
+    describe '#update_cached_fields' do
       before do
         @charity = Fabricate :charity
       end

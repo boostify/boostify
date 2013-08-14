@@ -28,7 +28,8 @@ module Boostify
     end
 
     def update
-      donation.update_attributes update_donation_params
+      donation.charity = charity
+      donation.save
       respond_with donation
     end
 
@@ -44,7 +45,18 @@ module Boostify
       end
 
       def update_donation_params
-        params.require(:donation).permit(:charity_id)
+        params.require(:donation).
+          permit(charity: charity_attributes)
+      end
+
+      def charity_attributes
+        [:boost_id, :title, :name, :url, :short_description,
+         :description, :logo, :cover]
+      end
+
+      def charity
+        @charity ||=
+          Charity.find_by_boost_id_or_create(update_donation_params[:charity])
       end
 
       def after_donation_creation(donation)
