@@ -25,11 +25,11 @@ module Boostify
 
         private
 
-          def advocate_count
+          def calc_advocates
             donations.count(:user_id, distinct: true)
           end
 
-          def calculate_income
+          def calc_income
             Money.new donations.sum(:commission_cents), Boostify::CURRENCY
           end
       end

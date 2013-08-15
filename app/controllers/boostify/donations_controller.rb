@@ -20,7 +20,7 @@ module Boostify
       if @donation.save
         after_donation_creation @donation
         session[:donatable_id] = nil
-        flash[:notice] = pixel_img + t('flash.donation.success')
+        set_after_create_flash_message
         redirect_to donation_path(@donation)
       else
         redirect_to charities_path
@@ -28,7 +28,8 @@ module Boostify
     end
 
     def update
-      donation.update_attributes update_donation_params
+      donation.charity = charity
+      donation.save
       respond_with donation
     end
 
@@ -44,13 +45,21 @@ module Boostify
       end
 
       def update_donation_params
-        params.require(:donation).permit(:charity_id)
+        params.require(:donation).
+          permit(charity: charity_attributes)
+      end
+
+      def charity_attributes
+        [:boost_id, :title, :name, :url, :short_description,
+         :description, :logo, :cover]
+      end
+
+      def charity
+        @charity ||=
+          Charity.find_by_boost_id_or_create(update_donation_params[:charity])
       end
 
       def after_donation_creation(donation)
-        #TODO create a transaction to the donation
-        # do not forget to do some validations
-        # (p.e. user is allowed to create a transaction)
         if defined?(super)
           super donation
         end
@@ -68,8 +77,13 @@ module Boostify
           .html_safe
       end
 
+      def set_after_create_flash_message
+        key = @donation.charity.nil? ? :other_charity : :success
+        flash[:notice] = pixel_img << t(key, scope: [:flash, :donation])
+      end
+
       def donation
-        @donation ||= Donation.find params[:id]
+        @donation ||= Donation.where(token: params[:id]).first
       end
   end
 end
