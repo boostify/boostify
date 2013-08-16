@@ -5,7 +5,6 @@ class TransactionsController < ApplicationController
   end
 
   def show
-    session[:donatable_id] = params[:id]
-    redirect_to boostify.charities_path
+    redirect_to boostify.charities_path(donatable_id: params[:id])
   end
 end
