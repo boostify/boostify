@@ -8,18 +8,15 @@ module Boostify
     before_filter :verify_signature!, only: :update
 
     def new
-      session[:donatable_id] = params[:id]
-      redirect_to charities_path
+      redirect_to charities_path(donatable_id: params[:id])
     end
 
     # in params complete donation needed (with charity, amount, etc.)
-    # in session donatable_id needed
     def create
       @donation = Donation.new(donation_params)
       before_donation_creation @donation
       if @donation.save
         after_donation_creation @donation
-        session[:donatable_id] = nil
         set_after_create_flash_message
         redirect_to donation_path(@donation)
       else
@@ -40,8 +37,9 @@ module Boostify
     private
 
       def donation_params
-        params.require(:donation).permit(:amount, :commission, :charity_id)
-          .merge(donatable_id: session[:donatable_id], user: get_current_user)
+        params.require(:donation)
+          .permit(:amount, :commission, :charity_id, :donatable_id)
+          .merge(user: get_current_user)
       end
 
       def update_donation_params

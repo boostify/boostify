@@ -16,8 +16,7 @@ module Boostify
 
       context 'with available donatable_id' do
         before do
-          session[:donatable_id] = @transaction.id
-          get :index
+          get :index, donatable_id: @transaction.id
         end
 
         it 'assigns charities as @charities' do
