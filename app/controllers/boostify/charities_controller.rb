@@ -3,7 +3,7 @@ require_dependency 'boostify/application_controller'
 module Boostify
   class CharitiesController < ApplicationController
 
-    before_filter :new_donation_from_session, only: [:index, :show]
+    before_filter :build_donation
 
     def index
       @charities = Charity.favorites
@@ -15,9 +15,9 @@ module Boostify
 
     private
 
-      def new_donation_from_session
-        if session[:donatable_id]
-          donatable = Boostify.donatable_class.find session[:donatable_id]
+      def build_donation
+        if params[:donatable_id]
+          donatable = Boostify.donatable_class.find params[:donatable_id]
           @donation = Donation.from_donatable donatable
         end
       end
