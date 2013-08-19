@@ -58,7 +58,7 @@ module Boostify
       its(:income) { should == Money.new(0, Boostify::CURRENCY) }
       its(:advocates) { should == 0 }
 
-      context 'when a donation is created' do
+      context 'when a donation is created without a user' do
         before do
           @donation = Fabricate :donation, charity: @charity
         end
@@ -74,6 +74,22 @@ module Boostify
 
           it { @donation.user should be }
           its(:advocates) { should == 1 }
+        end
+      end
+
+      context 'when a donation is created without a charity' do
+        before do
+          @donation = Fabricate :donation, user: User.create!, charity: nil
+        end
+
+        it { @donation.user.should be }
+        its(:advocates) { should == 0 }
+        its(:income) { should == Money.new(0, Boostify::CURRENCY) }
+
+        context 'when selecting the charity' do
+          before { @donation.update_attributes! charity: @charity }
+          its(:advocates) { should == 1 }
+          its(:income) { should == @donation.commission }
         end
       end
     end
