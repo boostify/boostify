@@ -57,7 +57,9 @@ module Boostify
       end
 
       def update_charity_cached_fields
-        if charity.present? && (user_id_changed? || commission_changed?)
+        if charity.present? &&
+          (user_id_changed? || commission_changed? || charity_id_changed?)
+
           charity.update_cached_fields!
         end
       end
