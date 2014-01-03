@@ -17,10 +17,9 @@ Gem::Specification.new do |s|
   s.files = Dir["{app,config,db,lib}/**/*"] +
     ["MIT-LICENSE", "Rakefile", "README.md"]
 
-  s.add_dependency 'rails', '~> 3.2.12'
+  s.add_dependency 'rails', '>= 3.2.15'
   s.add_dependency 'haml'
   s.add_dependency 'faraday'
-  s.add_dependency 'strong_parameters'
   s.add_dependency 'money-rails'
   s.add_dependency 'hmac_auth'
 
