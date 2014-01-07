@@ -2,7 +2,6 @@ language: ruby
 rvm:
   - 1.9.3
   - 2.0.0
-  - rbx-19mode
 notifications:
   email: false
 script:
@@ -12,6 +11,3 @@ services: mongodb
 env:
   - ORM=mongoid
   - ORM=active_record
-matrix:
-  allowed_failures:
-    - rvm: rbx-19mode
