@@ -12,3 +12,6 @@ services: mongodb
 env:
   - ORM=mongoid
   - ORM=active_record
+matrix:
+  allowed_failures:
+    - rvm: rbx-19mode
