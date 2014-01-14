@@ -22,6 +22,9 @@ module Boostify
           field :income, type: Money, default: Money.new(0, Boostify::CURRENCY)
 
           field :sort_order, type: Integer
+
+          index({ boost_id: 1, _id: 1 })
+          index({ boost_id: 1, sort_order: -1, created_at: -1 })
         end
 
         module ClassMethods
