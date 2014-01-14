@@ -17,11 +17,12 @@ Gem::Specification.new do |s|
   s.files = Dir["{app,config,db,lib}/**/*"] +
     ["MIT-LICENSE", "Rakefile", "README.md"]
 
-  s.add_dependency 'rails', '>= 3.2.15'
+  s.add_dependency 'rails', '> 3.2.0'
   s.add_dependency 'haml'
   s.add_dependency 'faraday'
   s.add_dependency 'money-rails'
   s.add_dependency 'hmac_auth'
+  s.add_dependency 'strong_parameters'
 
   s.add_development_dependency 'sqlite3'
   s.add_development_dependency 'rspec-rails'
@@ -36,4 +37,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'database_cleaner'
   s.add_development_dependency 'capybara'
   s.add_development_dependency 'timecop'
+  s.add_development_dependency 'appraisal'
 end
