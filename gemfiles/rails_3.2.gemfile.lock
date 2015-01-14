@@ -1,12 +1,12 @@
 PATH
-  remote: /home/sebastian/workspace/boostify
+  remote: ../
   specs:
     boostify (0.0.1)
       faraday
       haml
       hmac_auth
       money-rails
-      rails (> 3.2.0)
+      rails (~> 3.2.0)
 
 GEM
   remote: https://rubygems.org/
@@ -68,12 +68,12 @@ GEM
     fabrication (2.7.2)
     faker (1.1.2)
       i18n (~> 0.5)
-    faraday (0.8.9)
-      multipart-post (~> 1.2.0)
-    haml (4.0.5)
+    faraday (0.9.1)
+      multipart-post (>= 1.2, < 3)
+    haml (4.0.6)
       tilt
     hike (1.2.3)
-    hmac_auth (0.1.1)
+    hmac_auth (0.1.2)
       activesupport
     i18n (0.6.1)
     journey (1.0.4)
@@ -100,7 +100,7 @@ GEM
       tzinfo (~> 0.3.22)
     moped (1.5.0)
     multi_json (1.8.4)
-    multipart-post (1.2.0)
+    multipart-post (2.0.0)
     nokogiri (1.6.0)
       mini_portile (~> 0.5.0)
     origin (1.1.0)
