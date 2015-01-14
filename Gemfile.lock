@@ -6,7 +6,7 @@ PATH
       haml
       hmac_auth
       money-rails
-      rails (~> 3.2.0)
+      rails (>= 3.2.0)
 
 GEM
   remote: https://rubygems.org/
