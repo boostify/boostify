@@ -23,6 +23,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'money-rails'
   s.add_dependency 'hmac_auth'
 
+  s.add_development_dependency 'webmock'
   s.add_development_dependency 'sqlite3'
   s.add_development_dependency 'rspec-rails'
   s.add_development_dependency 'pry'
