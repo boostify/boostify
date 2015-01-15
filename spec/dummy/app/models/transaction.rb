@@ -18,6 +18,4 @@ class Transaction
 
   donatable_amount :my_amount
   donatable_commission :my_commission
-
-  attr_accessible :my_amount, :my_commission
 end

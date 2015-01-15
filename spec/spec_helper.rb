@@ -35,19 +35,16 @@ RSpec.configure do |config|
 
   # DatabaseCleaner
   config.before(:suite) do
-    DatabaseCleaner[:mongoid].strategy = :truncation
-    DatabaseCleaner[:mongoid].clean_with(:truncation)
     DatabaseCleaner[:active_record].strategy = :transaction
   end
 
   config.before(:each) do
-    DatabaseCleaner[:mongoid].start
     DatabaseCleaner[:active_record].start
     @routes = Boostify::Engine.routes
+    Mongoid.purge!
   end
 
   config.after(:each) do
-    DatabaseCleaner[:mongoid].clean
     DatabaseCleaner[:active_record].clean
   end
 end
