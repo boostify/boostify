@@ -88,7 +88,7 @@ describe Boostify::DonationsController do
   describe 'GET show' do
     render_views
     let(:attributes) do
-      Fabricate.attributes_for :donation, charity_id: @charity.boost_id
+      Fabricate.attributes_for(:donation).merge charity_id: @charity.boost_id
     end
     let(:donation) { Boostify::Donation.create! attributes }
     subject { get :show, id: donation.token }
@@ -99,6 +99,7 @@ describe Boostify::DonationsController do
     end
 
     it 'does not show the link to donate via boost' do
+      # this means that donation.charity should not be nil
       subject
       response.body.should_not include 'Go to'
     end
