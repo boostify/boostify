@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe Boostify::DonationsController do
+  routes { Boostify::Engine.routes }
 
   before do
     @transaction = Transaction.create! my_amount: 1.2, my_commission: 0.70

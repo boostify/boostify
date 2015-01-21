@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 module Boostify
-
   describe CharitiesController do
+    routes { Boostify::Engine.routes }
 
     before do
       @transaction = Fabricate :transaction

@@ -2,6 +2,8 @@ require 'spec_helper'
 
 module Boostify
   describe ApplicationController do
+    routes { Boostify::Engine.routes }
+
     describe '#get_current_user' do
       subject { ApplicationController.new.get_current_user }
       it { should be_nil }
