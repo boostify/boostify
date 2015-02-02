@@ -135,9 +135,16 @@ describe Boostify::DonationsController do
     end
 
     context 'with format != json' do
-      before { put :update, signed_attr.merge(format: :html) }
-      it { response.status.should == 406 }
-      it { response.body.should be_blank }
+      if Rails::VERSION::MAJOR == 3
+        before { put :update, signed_attr.merge(format: :html) }
+        it { response.status.should == 406 }
+        it { response.body.should be_blank }
+      else
+        it 'raises unknown format exception' do
+          expect { put :update, signed_attr.merge(format: :html) }.
+            to raise_error
+        end
+      end
     end
 
     context 'valid attributes' do
