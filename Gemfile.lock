@@ -74,7 +74,7 @@ GEM
     haml (4.0.3)
       tilt
     hike (1.2.3)
-    hmac_auth (0.1.0)
+    hmac_auth (0.1.2)
       activesupport
     i18n (0.6.1)
     journey (1.0.4)
