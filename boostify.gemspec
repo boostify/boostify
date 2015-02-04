@@ -17,24 +17,26 @@ Gem::Specification.new do |s|
   s.files = Dir["{app,config,db,lib}/**/*"] +
     ["MIT-LICENSE", "Rakefile", "README.md"]
 
-  s.add_dependency 'rails', '~> 3.2.12'
+  s.add_dependency 'rails', '>= 3.2.0'
   s.add_dependency 'haml'
   s.add_dependency 'faraday'
-  s.add_dependency 'strong_parameters'
   s.add_dependency 'money-rails'
   s.add_dependency 'hmac_auth'
 
+  s.add_development_dependency 'webmock'
   s.add_development_dependency 'sqlite3'
-  s.add_development_dependency 'rspec-rails'
+  s.add_development_dependency 'rspec-rails', '< 3.0'
   s.add_development_dependency 'pry'
   s.add_development_dependency 'rails_best_practices'
   s.add_development_dependency 'simplecov'
   s.add_development_dependency 'coveralls'
   s.add_development_dependency 'rubocop'
-  s.add_development_dependency 'mongoid'
+  s.add_development_dependency 'mongoid', '>= 3.0'
   s.add_development_dependency 'fabrication'
   s.add_development_dependency 'faker'
   s.add_development_dependency 'database_cleaner'
   s.add_development_dependency 'capybara'
   s.add_development_dependency 'timecop'
+  s.add_development_dependency 'appraisal'
+  s.add_development_dependency 'test-unit'
 end

@@ -15,7 +15,9 @@ require 'boostify/models/mongoid/donation'
 require 'boostify/jobs/sync_charities'
 
 require 'haml'
-require 'strong_parameters'
+if Rails::VERSION::MAJOR == 3
+  require 'strong_parameters'
+end
 
 I18n.load_path += Dir[File.expand_path(File.join(File.dirname(__FILE__),
   '../locales', '*.yml')).to_s]

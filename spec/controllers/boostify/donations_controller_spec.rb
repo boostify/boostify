@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe Boostify::DonationsController do
+  routes { Boostify::Engine.routes }
 
   before do
     @transaction = Transaction.create! my_amount: 1.2, my_commission: 0.70
@@ -87,7 +88,7 @@ describe Boostify::DonationsController do
   describe 'GET show' do
     render_views
     let(:attributes) do
-      Fabricate.attributes_for :donation, charity_id: @charity.boost_id
+      Fabricate.attributes_for(:donation).merge charity_id: @charity.boost_id
     end
     let(:donation) { Boostify::Donation.create! attributes }
     subject { get :show, id: donation.token }
@@ -98,6 +99,7 @@ describe Boostify::DonationsController do
     end
 
     it 'does not show the link to donate via boost' do
+      # this means that donation.charity should not be nil
       subject
       response.body.should_not include 'Go to'
     end
@@ -133,9 +135,16 @@ describe Boostify::DonationsController do
     end
 
     context 'with format != json' do
-      before { put :update, signed_attr.merge(format: :html) }
-      it { response.status.should == 406 }
-      it { response.body.should be_blank }
+      if Rails::VERSION::MAJOR == 3
+        before { put :update, signed_attr.merge(format: :html) }
+        it { response.status.should == 406 }
+        it { response.body.should be_blank }
+      else
+        it 'raises unknown format exception' do
+          expect { put :update, signed_attr.merge(format: :html) }.
+            to raise_error
+        end
+      end
     end
 
     context 'valid attributes' do
