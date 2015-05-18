@@ -14,7 +14,7 @@ module Boostify
 
             def sorted_favorites
               scoped.
-                where(boost_id: Boostify.favorite_charity_ids).
+                where(boost_id: favorite_charity_ids).
                 order('sort_order DESC, created_at DESC')
             end
         end

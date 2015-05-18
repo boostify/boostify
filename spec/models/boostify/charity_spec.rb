@@ -122,5 +122,17 @@ module Boostify
         its(:last) { should == @second }
       end
     end
+
+    describe 'favorite_charity_ids' do
+      context 'Boostify.favorite_charity_ids is a proc' do
+        let(:aproc) { proc { [1] } }
+        before { Boostify.favorite_charity_ids = aproc }
+
+        it 'calls the proc' do
+          expect(aproc).to receive(:call).and_call_original
+          expect(Charity.favorite_charity_ids).to eq [1]
+        end
+      end
+    end
   end
 end

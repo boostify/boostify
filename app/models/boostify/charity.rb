@@ -47,6 +47,14 @@ module Boostify
             charity.tap(&:save!)
         end
       end
+
+      def favorite_charity_ids
+        if Boostify.favorite_charity_ids.respond_to? :call
+          Boostify.favorite_charity_ids.call
+        else
+          Boostify.favorite_charity_ids
+        end
+      end
     end
 
     private
