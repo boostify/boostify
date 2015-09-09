@@ -3,7 +3,7 @@ module Boostify
     class SyncCharities
 
       def self.perform
-        Boostify.favorite_charity_ids.each do |charity_id|
+        Boostify::Charity.favorite_charity_ids.each do |charity_id|
           update_or_create_charity charity_id
         end
       end

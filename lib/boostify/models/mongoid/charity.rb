@@ -35,7 +35,7 @@ module Boostify
             # desc.
             def sorted_favorites
               scoped.
-                in(boost_id: Boostify.favorite_charity_ids).
+                in(boost_id: favorite_charity_ids).
                 desc(:sort_order).desc(:created_at)
             end
         end
