@@ -5,6 +5,7 @@ module Boostify
     respond_to :html, except: :update
     respond_to :json, only: :update
 
+    skip_before_filter :verify_authenticity_token, only: :update
     before_filter :verify_signature!, only: :update
 
     def new
