@@ -20,7 +20,7 @@ module Boostify
         end
       end
 
-      [:title, :name, :url, :short_description, :description, :logo].
+      [:title, :name, :url, :short_description, :logo].
         each do |att|
 
         describe "##{att}" do

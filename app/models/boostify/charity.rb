@@ -16,8 +16,7 @@ module Boostify
     validates :boost_id,
       presence: true, uniqueness: true
 
-    validates :title, :name, :url, :short_description, :description, :logo,
-      presence: true
+    validates :title, :name, :url, :short_description, :logo, presence: true
 
     def update_cached_fields!
       calc_income!
