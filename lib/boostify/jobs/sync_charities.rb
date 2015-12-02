@@ -18,7 +18,7 @@ module Boostify
 
         def self.params(charity_id)
           params = JSON.parse(download(charity_id))['charity']
-          params['boost_id'] = params['id']
+          params['boost_id'] = params.delete('id')
           params
         end
 
