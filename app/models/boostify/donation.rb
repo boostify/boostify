@@ -18,7 +18,7 @@ module Boostify
     before_create :generate_token
     after_save :update_charity_cached_fields
 
-    validates :donatable, :commission, presence: true
+    validates :donatable_id, :commission, presence: true
     validate :lock_charity
 
     def pixel_url
