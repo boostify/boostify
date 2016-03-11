@@ -25,7 +25,7 @@ module Boostify
       [
         Boostify.tracker_api_endpoint, '?',
          HMACAuth::Signature.
-           sign(query_params, secret: Boostify.partner_secret).to_query
+           sign(query_params, secret: partner_secret).to_query
       ].join ''
     end
 
@@ -42,10 +42,26 @@ module Boostify
 
     private
 
+      def partner_id
+        if Boostify.partner_id.respond_to? :call
+          Boostify.partner_id.call
+        else
+          Boostify.partner_id.to_s
+        end
+      end
+
+      def partner_secret
+        if Boostify.partner_secret.respond_to? :call
+          Boostify.partner_secret.call
+        else
+          Boostify.partner_secret
+        end
+      end
+
       def query_params
         {
           referal: {
-            shop_id: Boostify.partner_id.to_s,
+            shop_id: partner_id,
             charity_id: charity_id.to_s
           },
           sale: {
