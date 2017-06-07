@@ -63,11 +63,19 @@ module Boostify
   end
 
   def self.charity_api_endpoint
-    "#{Boostify.api_endpoint}/shops/#{Boostify.partner_id}/charities"
+    "#{Boostify.api_endpoint}/shops/#{partner_id_value}/charities"
   end
 
   def self.tracker_api_endpoint
     "#{Boostify.api_endpoint}/tracker/both.png"
+  end
+
+  def self.partner_id_value
+    if Boostify.partner_id.respond_to? :call
+      Boostify.partner_id.call
+    else
+      Boostify.partner_id
+    end
   end
 
   CURRENCY = 'EUR'
